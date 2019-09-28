@@ -1,3 +1,14 @@
 <resources>
-    <string name="app_name">ethme</string>
+    <string name="app_name">ETHME</string>
+    <string name="welcome_text">Hello there! Welcome to Ethereum\nLet\'s start with a wallet...</string>
+    <string name="welcome_restore_wallet">Restore Wallet</string>
+    <string name="welcome_create_wallet">Create new Wallet</string>
+    <string name="instructions_text">\nDear User, <b>ATTENTION!</b>\n\n
+        Be sure to store the following <b>12 words</b>, your seed, from the next screen securely on paper and keep them in one or two safe places.\n\n
+        <b>DO NOT</b> make any digital copy of it!\nYour seed is the key to your corresponding assets on the blockchain.
+        Everyone who has access to this key can take the underlying assets.\n\n
+        <b>No one</b> can recover your seed, if it is lost!\n\n<b>Your seed is your money!</b>\n\nBe responsible!</string>
+    <string name="instructions_continue">Continue</string>
+    <string name="instructions_read"><![CDATA[I read & understood my responsibility]]></string>
+    <string name="wallet_creation_text">Your Wallet is now being created! :D</string>
 </resources>

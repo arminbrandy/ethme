@@ -4,6 +4,9 @@ buildscript {
     repositories {
         google()
         jcenter()
+
+        // adding maven Central for web3j dependency
+        mavenCentral()
         
     }
     dependencies {
