@@ -6,9 +6,6 @@ at the FH Technikum Wien – University of Applied Sciences
 ETHME is a open source study project with following Vision:
 (You can also find it as PDF in the init commit)
 
-as part of my Bachelor’s degree of computer science
-at the FH Technikum Wien – University of Applied Sciences
-
 Vision
 ETHME in it’s mvp Version shall be a very basic Android App, 
 which offers a basic Ether Wallet and the possibility to create 
