@@ -1,14 +1,34 @@
 <resources>
-    <string name="app_name">ETHME</string>
+    <string name="app_name">ethme</string>
     <string name="welcome_text">Hello there! Welcome to Ethereum\nLet\'s start with a wallet...</string>
-    <string name="welcome_restore_wallet">Restore Wallet</string>
-    <string name="welcome_create_wallet">Create new Wallet</string>
+    <string name="welcome_restore_wallet">Restore old Wallet</string>
+    <string name="welcome_create_wallet">Create a new Wallet</string>
     <string name="instructions_text">\nDear User, <b>ATTENTION!</b>\n\n
         Be sure to store the following <b>12 words</b>, your seed, from the next screen securely on paper and keep them in one or two safe places.\n\n
         <b>DO NOT</b> make any digital copy of it!\nYour seed is the key to your corresponding assets on the blockchain.
         Everyone who has access to this key can take the underlying assets.\n\n
         <b>No one</b> can recover your seed, if it is lost!\n\n<b>Your seed is your money!</b>\n\nBe responsible!</string>
     <string name="instructions_continue">Continue</string>
-    <string name="instructions_read"><![CDATA[I read & understood my responsibility]]></string>
+    <string name="instructions_read">Yes, I fully understand my responsibility</string>
     <string name="wallet_creation_text">Your Wallet is now being created! :D</string>
+    <string name="pin_creation_1">1</string>
+    <string name="pin_creation_2">2</string>
+    <string name="pin_creation_3">3</string>
+    <string name="pin_creation_4">4</string>
+    <string name="pin_creation_5">5</string>
+    <string name="pin_creation_6">6</string>
+    <string name="pin_creation_7">7</string>
+    <string name="pin_creation_8">8</string>
+    <string name="pin_creation_9">9</string>
+    <string name="pin_creation_0">0</string>
+    <string name="pin_pad_empty_cicle" translatable="false">\u25CB</string>
+    <string name="pin_pad_full_cicle" translatable="false">\u25CF</string>
+    <string name="pin_creation_tv_pin" translatable="false">\u25CB\u25CB\u25CB\u25CB\u25CB</string>
+    <string name="pin_creation_del" translatable="false">\u232B</string>
+    <string name="pin_creation_reset" translatable="false">\u21ba</string>
+    <string name="pin_creation_tv_info">Please setup a PIN</string>
+    <string name="pin_creation_tv_info_confirmation">Please confirm your PIN</string>
+    <string name="toast_pin_didnt_match">PINs didn\'t match</string>
+    <string name="toast_pin_isnt_safe">You can be more creative!\nNo counting up or down nor equal numbers</string>
+    <string name="fragment_success">Success!</string>
 </resources>

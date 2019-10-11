@@ -8,6 +8,8 @@ import android.view.View;
 
 public class MainActivity extends AppCompatActivity {
 
+    public static AndroidUtils androidUtils = AndroidUtils.getInstance();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -16,14 +18,15 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void createWallet(View view) {
-        Intent act = new Intent(this, InstructionsActivity.class);
-        act.putExtra("wallet","create");
-        startActivity(act);
+        Intent next = new Intent(this, PinPadActivity.class);
+        next.putExtra("wallet","create");
+        startActivity(next);
     }
 
     public void restoreWallet(View view) {
-        Intent act = new Intent(this, InstructionsActivity.class);
-        act.putExtra("wallet","restore");
-        startActivity(act);
+        Intent next = new Intent(this, PinPadActivity.class);
+        next.putExtra("wallet","restore");
+        startActivity(next);
     }
+
 }

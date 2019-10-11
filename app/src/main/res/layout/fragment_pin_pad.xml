@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/pin_pad_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".PinPadActivity"
+    >
+
+    <TextView
+        android:id="@+id/tv_pin_info"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/pin_creation_tv_info"
+        android:textSize="28sp"
+        android:textColor="@color/textPrimary"
+        android:textAlignment="center"
+        android:layout_marginTop="30dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        />
+
+    <TextView
+        android:id="@+id/tv_pin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/pin_creation_tv_pin"
+        android:textSize="70sp"
+        android:textColor="@color/colorPrimaryDark"
+        android:textAlignment="center"
+        app:layout_constraintBottom_toTopOf="@id/tv_pin_confirmation"
+        app:layout_constraintLeft_toLeftOf="parent"
+        />
+
+    <TextView
+        android:id="@+id/tv_pin_confirmation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/pin_creation_tv_pin"
+        android:textSize="70sp"
+        android:textColor="@color/colorPrimaryDark"
+        android:textAlignment="center"
+        android:layout_marginBottom="30dp"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toTopOf="@id/pin_grid"
+        app:layout_constraintLeft_toLeftOf="parent"
+        />
+
+    <GridLayout
+        android:id="@+id/pin_grid"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:rowCount="4"
+        android:columnCount="3"
+        android:paddingTop="20dp"
+        android:background="@color/colorPrimary"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        >
+
+        <Button
+            style="@style/btn_pin"
+            android:id="@+id/btn_pin_1"
+            android:text="@string/pin_creation_1"
+            android:tag="1"
+            />
+
+        <Button
+            style="@style/btn_pin"
+            android:id="@+id/btn_pin_2"
+            android:text="@string/pin_creation_2"
+            android:tag="2"
+            />
+
+        <Button
+            style="@style/btn_pin"
+            android:id="@+id/btn_pin_3"
+            android:text="@string/pin_creation_3"
+            android:tag="3"
+            />
+        <Button
+            style="@style/btn_pin"
+            android:id="@+id/btn_pin_4"
+            android:text="@string/pin_creation_4"
+            android:tag="4"
+            />
+
+        <Button
+            style="@style/btn_pin"
+            android:id="@+id/btn_pin_5"
+            android:text="@string/pin_creation_5"
+            android:tag="5"
+            />
+
+        <Button
+            style="@style/btn_pin"
+            android:id="@+id/btn_pin_6"
+            android:text="@string/pin_creation_6"
+            android:tag="6"
+            />
+        <Button
+            style="@style/btn_pin"
+            android:id="@+id/btn_pin_7"
+            android:text="@string/pin_creation_7"
+            android:tag="7"
+            />
+
+        <Button
+            style="@style/btn_pin"
+            android:id="@+id/btn_pin_8"
+            android:text="@string/pin_creation_8"
+            android:tag="8"
+            />
+
+        <Button
+            style="@style/btn_pin"
+            android:id="@+id/btn_pin_9"
+            android:text="@string/pin_creation_9"
+            android:tag="9"
+            />
+
+        <Button
+            style="@style/btn_pin"
+            android:id="@+id/btn_pin_reset"
+            />
+
+        <Button
+            style="@style/btn_pin"
+            android:id="@+id/btn_pin_0"
+            android:text="@string/pin_creation_0"
+            android:tag="0"
+            />
+
+        <Button
+            style="@style/btn_pin"
+            android:id="@+id/btn_pin_del"
+            android:text="@string/pin_creation_del"
+            />
+    </GridLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

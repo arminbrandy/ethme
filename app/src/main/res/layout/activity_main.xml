@@ -13,33 +13,34 @@
         android:textAlignment="center"
         android:textSize="21sp"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.494"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.147" />
+        app:layout_constraintVertical_bias="0.258" />
 
     <Button
         android:id="@+id/restoreWallet"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        style="@style/btn_default"
+        android:onClick="restoreWallet"
         android:text="@string/welcome_restore_wallet"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.6"
-        android:onClick="restoreWallet"/>
+        app:layout_constraintVertical_bias="0.706" />
 
     <Button
         android:id="@+id/createWallet"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        style="@style/btn_default"
+        android:onClick="createWallet"
         android:text="@string/welcome_create_wallet"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.8"
-        android:onClick="createWallet"/>
+        app:layout_constraintVertical_bias="0.877" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
