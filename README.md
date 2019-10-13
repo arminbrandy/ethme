@@ -4,7 +4,7 @@ the App which makes interacting with ETHEREUM easy
 As part of my Bachelor’s degree of computer science
 at the FH Technikum Wien – University of Applied Sciences
 ETHME is a open source study project with following Vision:
-(You can also find it as PDF in the init commit)
+(You can also find the Whitepaper & other documents under the directory ./pdf)
 
 Vision
 ETHME in it’s mvp Version shall be a very basic Android App, 
@@ -32,7 +32,8 @@ which represent a workload of about 125h.
 For this project 25 hours are planned for theory and learning more about ethereum, 
 it’s EVM and how smart contracts and Dapps work. 
 For that purpose, especially “Mastering Ethereum – Building Smart Contracts and Dapps” 
-from Andreas M. Antonopoulos & Dr. Gavin Wood is used as learning material.
+from Andreas M. Antonopoulos & Dr. Gavin Wood is used as learning material. 
+(https://github.com/ethereumbook/ethereumbook)
 
 The other 100 hours are reserved for implementing ETHME. After a successful implementation, 
 ETHME should be an Android application in form of an .apk file which has really 
@@ -42,3 +43,5 @@ Until then there’ll be a project status update every Friday as short PDF sent 
 Unless otherwise agreed with the Tutor, the project hast above defined requirements to be done, to be seen as successful.
 
 For time & task recording, a simple Google Sheet will be used.
+
+As study project besides a working product of course, the focus also lies in learning the used technologies, as Android App development and web3j.
