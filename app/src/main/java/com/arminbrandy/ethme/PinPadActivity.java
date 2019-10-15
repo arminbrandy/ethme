@@ -13,10 +13,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class PinPadActivity extends AppCompatActivity {
 
-    private final int PINSIZE = 5;
+    private final int PINSIZE = 1;
     private boolean isConfirmationMode = false;
 
     private List<Integer> PIN = new ArrayList<>();
@@ -201,11 +202,14 @@ public class PinPadActivity extends AppCompatActivity {
     }
 
     public void nextActivity(View v){
-        int[] pin = PIN.stream().mapToInt(i->i).toArray();
+        //int[] pin = PIN.stream().mapToInt(i->i).toArray();
+        String pinS = PIN.stream().map(i -> i.toString()).collect(Collectors.joining());
         Intent next = new Intent(this, InstructionsActivity.class);
-        next.putExtra("pin", pin);
+        //next.putExtra("pin", pin);
+        next.putExtra("pin",pinS);
         startActivity(next);
         resetPIN();
+
     }
 
     /*
@@ -220,6 +224,7 @@ public class PinPadActivity extends AppCompatActivity {
                 isEqualR[offset+1] = ((PIN.get(i) + offset) == PIN.get(i+1));
             }
         }
-        return isEqualR[0] || isEqualR[1] || isEqualR[2];
+        //return isEqualR[0] || isEqualR[1] || isEqualR[2];
+        return false;
     }
 }

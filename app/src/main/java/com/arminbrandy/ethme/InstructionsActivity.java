@@ -40,7 +40,8 @@ public class InstructionsActivity extends AppCompatActivity {
     public void continueWallet(View view) {
         Intent next = new Intent(this, WalletCreationActivity.class);
         next.putExtra("pin",
-                getIntent().getIntArrayExtra("pin")
+                //getIntent().getIntArrayExtra("pin")
+                getIntent().getStringExtra("pin")
         );
         startActivity(next);
 
