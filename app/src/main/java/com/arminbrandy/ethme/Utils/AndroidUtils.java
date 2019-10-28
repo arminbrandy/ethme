@@ -1,4 +1,4 @@
-package com.arminbrandy.ethme;
+package com.arminbrandy.ethme.Utils;
 
 import android.content.Context;
 import android.os.Build;
@@ -30,10 +30,13 @@ public class AndroidUtils {
         return sAndroidUtils;
     }
 
-    public static synchronized void vibrate(Context c){
+    public static synchronized void vibrate(Context c) {
+        vibrate(c,20);
+    }
+    public static synchronized void vibrate(Context c, int ms){
         Vibrator v = (Vibrator) c.getSystemService(c.VIBRATOR_SERVICE);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            v.vibrate(VibrationEffect.createOneShot(500, VibrationEffect.DEFAULT_AMPLITUDE));
+            v.vibrate(VibrationEffect.createOneShot(ms, VibrationEffect.DEFAULT_AMPLITUDE));
         } else {
             //deprecated in API 26
             if(v.hasVibrator()) {

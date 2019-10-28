@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    android:id="@+id/mnemonic_confirmation_layout"
+    >
+
+    <TextView
+        style="@style/text_header"
+        android:id="@+id/tv_mnemonic_confirmation_header"
+        android:layout_marginTop="10dp"
+        android:text="@string/mnemonic_confirmation_header"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        />
+
+    <GridLayout
+        android:id="@+id/gl_mnemonic_confirmation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:columnCount="4"
+        android:rowCount="2"
+        app:layout_constraintTop_toBottomOf="@+id/tv_mnemonic_confirmation_header"
+        app:layout_constraintLeft_toLeftOf="parent"
+        >
+
+        <TextView
+            android:layout_columnWeight="1"
+            android:id="@+id/tv_mnemonic_confirmation_a"
+            android:textAlignment="viewStart"
+            />
+        <EditText
+            style="@style/tv_mnemonic"
+            android:layout_columnWeight="5"
+            android:text=""
+            android:id="@+id/et_mnemonic_confirmation_a"
+            android:textAlignment="viewStart"
+            android:autofillHints="password"
+            android:importantForAutofill="no"
+            android:maxWidth="50dp"
+            />
+
+        <TextView
+            android:layout_columnWeight="1"
+            android:id="@+id/tv_mnemonic_confirmation_b"
+            android:textAlignment="viewStart"
+            />
+        <EditText
+            style="@style/tv_mnemonic"
+            android:layout_columnWeight="5"
+            android:text=""
+            android:id="@+id/et_mnemonic_confirmation_b"
+            android:textAlignment="viewStart"
+            android:autofillHints="password"
+            android:importantForAutofill="no"
+            android:maxWidth="50dp"
+
+            />
+
+        <TextView
+            android:layout_columnWeight="1"
+            android:id="@+id/tv_mnemonic_confirmation_c"
+            android:textAlignment="viewStart"
+            />
+        <EditText
+            style="@style/tv_mnemonic"
+            android:layout_columnWeight="5"
+            android:text=""
+            android:id="@+id/et_mnemonic_confirmation_c"
+            android:textAlignment="viewStart"
+            android:autofillHints="password"
+            android:importantForAutofill="no"
+            android:fadingEdgeLength="0dp"
+            android:maxWidth="50dp"
+            />
+        <TextView
+            android:layout_columnWeight="1"
+            android:id="@+id/tv_mnemonic_confirmation_d"
+            android:textAlignment="viewStart"
+            />
+        <EditText
+            style="@style/tv_mnemonic"
+            android:layout_columnWeight="5"
+            android:text=""
+            android:id="@+id/et_mnemonic_confirmation_d"
+            android:textAlignment="viewStart"
+            android:importantForAutofill="no"
+            android:maxWidth="50dp"
+            />
+    </GridLayout>
+
+
+    <TextView
+        style="@style/text_info"
+        android:id="@+id/tv_mnemonic_confirmation_info"
+        android:text="@string/mnemonic_confirmation_info"
+        android:layout_marginTop="10dp"
+        app:layout_constraintTop_toBottomOf="@+id/gl_mnemonic_confirmation"
+        app:layout_constraintLeft_toLeftOf="parent"
+        />
+
+    <Button
+        style="@style/btn_default_disabled"
+        android:id="@+id/btn_mnemonic_confirmation_finish"
+        android:text="@string/btn_finish"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:onClick="checkWords"
+        />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -11,13 +11,17 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.arminbrandy.ethme.Fragments.PinPadFragment;
+import com.arminbrandy.ethme.Fragments.SuccessFragment;
+import com.arminbrandy.ethme.Utils.AndroidUtils;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class PinPadActivity extends AppCompatActivity {
 
-    private final int PINSIZE = 1;
+    private final int PINSIZE = 5;
     private boolean isConfirmationMode = false;
 
     private List<Integer> PIN = new ArrayList<>();
@@ -41,18 +45,18 @@ public class PinPadActivity extends AppCompatActivity {
 
         PinPadFragment pinPad = new PinPadFragment();
 
-        // TODO pinPadFragment Bundle args isExample
+        /*// TODO pinPadFragment Bundle args isExample
         Bundle args = new Bundle();
         String item = getIntent().getStringExtra("wallet");
         args.putString(Intent.EXTRA_TEXT, item);
-        pinPad.setArguments(args);
+        pinPad.setArguments(args);*/
 
         getSupportFragmentManager().beginTransaction().
                 replace(R.id.pin_pad_container, pinPad).commit();
 
         SuccessFragment success = new SuccessFragment();
         getSupportFragmentManager().beginTransaction().
-                add(R.id.pin_pad_layout,success).commit();
+                add(R.id.pin_pad_layout, success).commit();
 
         if(savedInstanceState != null){
             isConfirmationMode = savedInstanceState.getBoolean("isC");
@@ -98,19 +102,17 @@ public class PinPadActivity extends AppCompatActivity {
         Button del = findViewById(R.id.btn_pin_del);
         del.setOnClickListener((View v) -> delLastPIN());
         del.setOnLongClickListener((View v) -> delPIN());
-        btnReset.setOnClickListener((View v) -> resetPIN());
+        btnReset.setOnClickListener((View v) -> resetPIN(true));
 
         updateUI();
     }
 
-    /*
-        Called from @file fragment_pin_pad.xml buttons
-    */
     public void addPIN(View v){
         int p = Integer.parseInt(v.getTag().toString());
         if(PIN.size() < PINSIZE && p >= 0 && p <= 9){
             PIN.add(p);
             updateViewPIN();
+            AndroidUtils.vibrate(this);
         }
         if(PIN.size() == PINSIZE){
             if(!isConfirmationMode){
@@ -163,20 +165,24 @@ public class PinPadActivity extends AppCompatActivity {
 
     public void delLastPIN() {
         if(PIN.size() != 0){
+            AndroidUtils.vibrate(getBaseContext());
             PIN.remove(PIN.size()-1);
             updateViewPIN();
         }
     }
     public boolean delPIN() {
         if(PIN.size() != 0){
+            AndroidUtils.vibrate(getBaseContext(), 80);
             PIN.clear();
             updateViewPIN();
         }
         return true;
     }
 
-    private void resetPIN() {
+    private void resetPIN(boolean vib) {
         if(isConfirmationMode){
+            if(vib)
+                AndroidUtils.vibrate(getBaseContext(), 80);
             isConfirmationMode = false;
             PINc.clear();
             clearPIN();
@@ -190,7 +196,7 @@ public class PinPadActivity extends AppCompatActivity {
     }
 
     private void errorClearPIN(@Nullable String toastMsg){
-        AndroidUtils.vibrate(getBaseContext());
+        AndroidUtils.vibrate(getBaseContext(), 80);
         clearPIN();
         if (toastMsg != null)
             Toast.makeText(this, toastMsg, Toast.LENGTH_LONG).show();
@@ -202,14 +208,11 @@ public class PinPadActivity extends AppCompatActivity {
     }
 
     public void nextActivity(View v){
-        //int[] pin = PIN.stream().mapToInt(i->i).toArray();
         String pinS = PIN.stream().map(i -> i.toString()).collect(Collectors.joining());
         Intent next = new Intent(this, InstructionsActivity.class);
-        //next.putExtra("pin", pin);
         next.putExtra("pin",pinS);
         startActivity(next);
-        resetPIN();
-
+        resetPIN(false);
     }
 
     /*
@@ -224,7 +227,6 @@ public class PinPadActivity extends AppCompatActivity {
                 isEqualR[offset+1] = ((PIN.get(i) + offset) == PIN.get(i+1));
             }
         }
-        //return isEqualR[0] || isEqualR[1] || isEqualR[2];
-        return false;
+        return isEqualR[0] || isEqualR[1] || isEqualR[2];
     }
 }

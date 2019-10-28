@@ -1,258 +1,251 @@
 package com.arminbrandy.ethme;
 
-import android.content.Context;
 import android.util.Log;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-import org.web3j.crypto.Bip39Wallet;
+import com.arminbrandy.ethme.Utils.CipherUtils;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import org.web3j.crypto.Bip32ECKeyPair;
 import org.web3j.crypto.Bip44WalletUtils;
-import org.web3j.crypto.CipherException;
 import org.web3j.crypto.Credentials;
+import org.web3j.crypto.ECDSASignature;
 
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
-import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Wallet {
     private static final String LOG_TAG = Wallet.class.getCanonicalName();
-    private Context mC;
-    private final String password;
-    private String walletPath;
-    private File walletDir;
-    private String address;
-    private String walletName;
-    private String mnemonic;
+    private static final ObjectMapper objectMapper = new ObjectMapper();
+    private static final String WALLET_FILE_NAME = "wallet";
+    private static final String AKS_ALIAS_PIN = "wallet_pin_signer";
+    private static final String AKS_ALIAS_DATA = "wallet_data_encryption";
+    private File mWalletFile;
+    private WalletData mWalletData;
+    private int mAddressIndex = 0;
+    private boolean isLoaded = false;
 
-    public Wallet(Context c, String pw){
-
-        password = pw;
-
-        mC = c;
-        walletPath = mC.getFilesDir().getAbsolutePath();
-
-        walletDir = new File(walletPath);
-
-        createWallet();
-
-        try{
-            address = getWalletCredentials().getAddress();
-            Log.d(LOG_TAG, address);
-            Log.d(LOG_TAG, password);
-            Log.d(LOG_TAG, walletName);
-            Log.d(LOG_TAG, mnemonic);
-            Log.d(LOG_TAG, "WORKED EVERYTHING");
-        } catch (Exception e){
-            Log.e(LOG_TAG, "Error getting wallet file credentials");
-        }
-
-//
-//
-//
-//        String nodeUrl = getNodeUrl(1);
-//
-//        Web3j web3 = Web3j.build(new HttpService(nodeUrl));
-//        try {
-//                Web3ClientVersion web3ClientVersion = web3.web3ClientVersion().sendAsync().get();
-//
-//                if(!web3ClientVersion.hasError()){
-//
-//                    System.out.println(walletPath);
-//                    System.out.println(walletDir);
-//                    walletDir = mC.getFileStreamPath("wallet");
-//                    //walletDir = new File("./");
-//
-//                    String filename = "keystore";
-//                    String fileContents = "Hello world!";
-//                    FileOutputStream outputStream;
-//                   // File keystoreFile = new File(mC.getFilesDir(),"keystore");
-//                    File keystoreFile = mC.getFilesDir();
-//                    keystoreFile = mC.getFilesDir();
-//                   // keystoreFile = mC.getExternalFilesDir();
-//                    try {
-//
-//                            // CREATE WALLET
-//                        final Bip39Wallet wallet = Bip44WalletUtils.generateBip44Wallet(this.password, keystoreFile);
-//                        wallet.toString();
-//                        wallet.getFilename();
-//                        System.out.println(wallet.toString());
-//                        final File file = new File(keystoreFile, wallet.getFilename());
-//                        if (!file.exists()) throw new IOException("No file created");
-//                        //saveWallet(wallet, mApp.getPrefs());
-//                        //return wallet;
-//
-//
-//                        /*
-//                            DO PREFERENCES
-//                        SharedPreferences sharedPreferences =
-//                                PreferenceManager.getDefaultSharedPreferences(this);
-//
-//                        SharedPreferences sharedPreferences = getPreferences(MODE_PRIVATE);
-//                        */
-//
-//
-//                        /*
-//                            READ WALLET FILE
-//                        keystoreFile.getAbsolutePath().toString();
-//                        boolean a = keystoreFile.isFile();
-//                        boolean b = keystoreFile.isDirectory();
-//                        File[] x = keystoreFile.listFiles();
-//                        for (File f : x){
-//                            System.out.println(f.getAbsolutePath());
-//                            Credentials crs = Bip44WalletUtils.loadCredentials(this.password, f);
-//                            String addy = crs.getAddress();
-//                            System.out.println(addy);
-//                        }*/
-//
-//                        String addy = "";
-//                        System.out.println("\n\n\n\n\nSTAST\\\n\n\n\n");
-//                        for(int i = 0; i < 100; i++){
-//                            //addy = testing();
-//                            System.out.println(i);
-//                            i = addy.contains("abba") ? 100 : i;
-//                        }
-//                        System.out.println(addy);
-//
-//
-///*
-//                        String fileName = WalletUtils.generateNewWalletFile(
-//                                password,
-//                                keystoreFile);*/
-//
-//                       /* String seed = fileName.toString();
-//                        //String seed = "fake news";
-//                        fileWriter.write(seed);
-//                        fileWriter.close();*/
-//                        System.out.println("WALLET CREATED");
-//
-//                        /*
-//                            web3j create walletfile
-//                        String fileName = WalletUtils.generateNewWalletFile(
-//                                "your password",
-//                                new File("/path/to/destination"));
-//                        */
-//
-//                        /*
-//                              Proofing FIle write to Data Dir
-//                        //String seed = WalletUtils.generateBip39Wallet(password,walletDir).toString();
-//                        //OutputStream os = x.
-//                        String fileContent = "satoshi bitcoin santos banana words crypto explosion infinite value gold digital moon";
-//
-//                        FileWriter fileWriter = new FileWriter(x);
-//                        fileWriter.write(fileContent);
-//                        fileWriter.close();
-//
-//                        */
-//
-//                        /*
-//                            Reading Data File
-//                        BufferedReader br = new BufferedReader(new FileReader(x));
-//                        String st;
-//                        while ((st = br.readLine()) != null) {
-//                            System.out.println(st);
-//                        }
-//                         */
-//                    } /*catch (IOException e) {
-//                        e.printStackTrace();
-//                    } catch (CipherException e) {
-//                        e.printStackTrace();
-//                    }*/
-//                    finally {
-//
-//                    }
-////                    WalletUtils.generateFullNewWalletFile(password,walletDir);
-//
-//                    String clientVersion = web3ClientVersion.getWeb3ClientVersion();
-//                    //Subscription subscription = web3.blockFlowable(false).subscribe(block -> {});
-//                    System.out.println("WE ARE ETHEREUM!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-//                    //System.out.println(web3.ethBlockNumber().flowable());
-//                    System.out.println(clientVersion);
-//                    //Connected
-//                }
-//                else {
-//                    //Show Error
-//                }
-//            }
-//        catch (Exception e) {
-//            //Show Error
-//        }
+    public Wallet(String dir){
+        mWalletFile = getWalletFile(dir);
     }
 
-
-    public String getAddress(){
-        return address;
-    }
-
-    // TODO Cipher Exception INvalid password is our case for wrong pin
-    private Credentials getWalletCredentials(){
-        try{
-            File f = new File(walletDir + "/" + walletName);
-            System.out.println(f.getAbsolutePath());
-            if(f.exists()){
-                return Bip44WalletUtils.loadCredentials(password, f);//(password+"hihi", f);
-            } else {
-                Log.d(LOG_TAG,"No such walletfile found");
-            }
-        } catch (CipherException e){
-            Log.w(LOG_TAG,"No such walletfile found", e);
-        } catch (IOException e){
-            Log.w(LOG_TAG,"Could not read Walletfile", e);
-        }
-        return null;
-    }
-    /*
-        @network:
-            0: mainnet
-            1: rinkeby
-            2: goerli
-            3: ropsten
-            4: kovan
-     */
-    private String getNodeUrl(int network){
-        String[] networks = {"mainnet", "rinkeby", "goerli", "ropsten", "kovan"};
-        try {
-            String json = loadJSONFromAsset("node.json");
-            if(json != null && network >= 0 && network < networks.length){
-                JSONObject obj = new JSONObject(json);
-                String pID = obj.getString("projectID");
-                String net = obj.getString(networks[network]);
-                return "https://".concat(net.concat(pID));
-            }
+    public String create(String pin){
+        if(mWalletFile.exists()) {
+            Log.d(LOG_TAG, "Cannot overwrite existing wallet file");
             return null;
-        } catch (JSONException e){
-            e.printStackTrace();
+        }
+
+        String mnemonic = CipherUtils.generateMnemonic();
+
+        // addresses List to add HD addresses anytime later on
+        mAddressIndex = 0;
+        List<String> addresses = new ArrayList<>();
+        addresses.add(deriveCredentials(mnemonic, mAddressIndex).getAddress());
+
+        // Iterating hashes the PW for easy verification to users PIN input later on
+        String PW = signedPIN(pin);
+        String hash = CipherUtils.digestPW(PW);
+
+        // encrypting mnemonic seed with PW
+        byte[] salt = CipherUtils.generateSalt();
+        byte[] iv = CipherUtils.generateIv();
+        byte[] cipher = CipherUtils.encryptWithPW(PW.toCharArray(), salt, iv, mnemonic);
+
+        if(cipher != null) {
+            mWalletData = new WalletData(salt, iv, cipher, hash, addresses);
+            return mnemonic;
+        } else {
+            Log.d(LOG_TAG, "Error during mnemonic encryption");
             return null;
         }
     }
 
-    private void createWallet(){
-        try {
-            // CREATE WALLET
-            final Bip39Wallet wallet = Bip44WalletUtils.generateBip44Wallet(password, walletDir);
-            mnemonic = wallet.getMnemonic();
-            walletName = wallet.getFilename();
-            final File file = new File(walletDir, wallet.getFilename());
-            if (!file.exists()) throw new IOException("No file created");
-
-
-        } catch (Exception e) {
-            //Show Error
-        }
-    }
-
-    private String loadJSONFromAsset(String filename) {
-        String json = null;
-        try {
-            InputStream is = mC.getAssets().open(filename);
-            int size = is.available();
-            byte[] buffer = new byte[size];
-            is.read(buffer);
-            is.close();
-            json = new String(buffer, "UTF-8");
+    public boolean persistWallet(String data){
+        try{
+            return persistWallet(objectMapper.readValue(data, WalletData.class));
         } catch (IOException e) {
-            e.printStackTrace();
+            Log.w(LOG_TAG, "IO Problem - No wallet file created", e);
+            return false;
+        }
+    }
+
+    public boolean persistWallet(WalletData data){
+        if(mWalletFile.exists()) {
+            Log.d(LOG_TAG, "Cannot overwrite existing wallet file");
+            return false;
+        }
+        mWalletData = data;
+        return persistWallet();
+    }
+
+    private boolean persistWallet(){
+        try{
+            // encrypt total WalletData, inclusive addresses for higher privacy / security reasons
+            // using an AndroidKeyStore symmetric key this time
+            byte[][] encryptedData = CipherUtils.encryptWithAndoridKS(
+                    AKS_ALIAS_DATA,
+                    objectMapper.writeValueAsString(mWalletData)
+            );
+
+            // store encrypted WalletData as simple (IV, data) pair
+            if(encryptedData != null){
+                FileWriter fileWriter = new FileWriter(mWalletFile);
+                fileWriter.write(objectMapper.writeValueAsString(encryptedData));
+                fileWriter.close();
+
+                isLoaded = true;
+                return true;
+            } else {
+                Log.d(LOG_TAG, "Wallet couldn't be created, error during data encryption");
+                return false;
+            }
+        } catch (IOException e) {
+            Log.w(LOG_TAG, "IO Problem - No wallet file created", e);
+            return false;
+        }
+    }
+
+    private boolean load(){
+        try {
+            if(!mWalletFile.exists()) {
+                Log.d(LOG_TAG, "No wallet file exists");
+                return false;
+            }
+
+            String walletDataJson = CipherUtils.decryptWithAndoridKS(
+                    AKS_ALIAS_DATA,
+                    objectMapper.readValue(mWalletFile, byte[][].class)
+            );
+
+            if(walletDataJson == null){
+                Log.d(LOG_TAG, "Wallet file decryption error");
+                return false;
+            }
+
+            mWalletData = objectMapper.readValue(walletDataJson, WalletData.class);
+            isLoaded = true;
+            return true;
+        } catch (IOException e) {
+            Log.w(LOG_TAG, "IO problem with wallet file", e);
+            return false;
+        }
+    }
+
+    private boolean verifyPin(String pin)
+            throws WalletInvalidStateException {
+        if(!isLoaded && !load()){
+            Log.w(LOG_TAG, "Problem loading wallet file data");
+            throw new WalletInvalidStateException();
+        }
+
+        if(mWalletData.getHash().equals(CipherUtils.digestPW(signedPIN(pin))))
+            return true;
+
+        Log.d(LOG_TAG, "Wrong PIN");
+        return false;
+    }
+
+    private String signedPIN(String pin){
+        return CipherUtils.bytesToBase64(
+                CipherUtils.signWithAndoridKS(AKS_ALIAS_PIN, pin)
+        );
+    }
+
+    private String decryptMnemonic(String pin){
+        return CipherUtils.decryptWithPW(
+                signedPIN(pin).toCharArray(),
+                mWalletData.getSalt(),
+                mWalletData.getIv(),
+                mWalletData.getCipher());
+    }
+
+    private Credentials deriveCredentials(String mnemonic, int index){
+        Bip32ECKeyPair masterEcKeyPair =
+                (Bip32ECKeyPair) Bip44WalletUtils.loadBip44Credentials("", mnemonic).getEcKeyPair();
+
+        // m/44'/60'/0'/0/index
+        return Credentials.create(Bip32ECKeyPair.deriveKeyPair(
+                masterEcKeyPair,
+                new int[]{index})
+        );
+    }
+
+    protected ECDSASignature sign(byte[] txHash, String pin)
+            throws WalletInvalidStateException {
+        return sign(txHash, mAddressIndex, pin);
+    }
+    protected ECDSASignature sign(byte[] txHash, int index, String pin)
+        throws WalletInvalidStateException {
+        return (verifyPin(pin)) ?
+                deriveCredentials(decryptMnemonic(pin), index).getEcKeyPair().sign(txHash) :
+                null;
+    }
+
+    protected String getWalletDataAsString(){
+        try {
+            return objectMapper.writeValueAsString(mWalletData);
+        } catch (JsonProcessingException e){
+            Log.w(LOG_TAG, "Error parsing walletData to String",e);
             return null;
         }
-        return json;
+    }
+
+    protected String getAddress()
+            throws WalletInvalidStateException {
+        return getAddress(mAddressIndex);
+    }
+    protected String getAddress(int index)
+            throws WalletInvalidStateException {
+        if(!isLoaded && !load())
+            throw new WalletInvalidStateException();
+        return (mWalletData.getAddresses().size() > index) ?
+                mWalletData.getAddresses().get(index) : null;
+    }
+
+    public void setAddressIndex(int index){
+        mAddressIndex = index;
+    }
+
+    public boolean generateAddress(int index, String pin)
+            throws WalletInvalidStateException {
+        if(getAddress(index) != null)
+            return true;
+        if(verifyPin(pin)){
+            mWalletData.getAddresses().add(
+                    deriveCredentials(decryptMnemonic(pin), index).getAddress()
+            );
+            return persistWallet();
+        }
+        return false;
+    }
+
+    static File getWalletFile(String dir){
+        return new File(dir, WALLET_FILE_NAME);
+    }
+
+    protected File getWalletFile(){
+        return mWalletFile;
+    }
+
+    protected boolean deleteWalletFile(){
+        if(!mWalletFile.exists()) return false;
+
+        return mWalletFile.delete();
+    }
+
+    public boolean isLoaded(){
+        return isLoaded;
+    }
+
+    public static class WalletInvalidStateException extends Exception {
+        public WalletInvalidStateException(String errorMessage) {
+            super(errorMessage);
+        }
+        public WalletInvalidStateException() {
+            this("Wallet needs to have Wallet.isLoaded() set to true for interaction");
+        }
     }
 }

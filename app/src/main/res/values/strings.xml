@@ -1,16 +1,29 @@
 <resources>
     <string name="app_name">ethme</string>
-    <string name="welcome_text">Hello there! Welcome to Ethereum\nLet\'s start with a wallet...</string>
+    <string name="welcome_text">Hello there :)\nWelcome to Ethereum!\n\nLet\'s start with a wallet...</string>
     <string name="welcome_restore_wallet">Restore old Wallet</string>
     <string name="welcome_create_wallet">Create a new Wallet</string>
-    <string name="instructions_text">\nDear User, <b>ATTENTION!</b>\n\n
-        Be sure to store the following <b>12 words</b>, your seed, from the next screen securely on paper and keep them in one or two safe places.\n\n
-        <b>DO NOT</b> make any digital copy of it!\nYour seed is the key to your corresponding assets on the blockchain.
-        Everyone who has access to this key can take the underlying assets.\n\n
-        <b>No one</b> can recover your seed, if it is lost!\n\n<b>Your seed is your money!</b>\n\nBe responsible!</string>
-    <string name="instructions_continue">Continue</string>
+    <string name="instructions_text">\n<b>Important Notice!</b>\n\n
+        \u25CF Following <b>12 words</b> are your <b>mnemonic seed</b> for this wallet.\n\n
+        \u25CF This seed is your <b>only recovery option</b> to this wallet!\n<i>(e.g. Something happens to your phone)</i>\n\n
+        \u25CF Write it down <b>on paper</b> and keep it somewhere safe.\n\n
+        \u25CF <b>Anyone</b> who has access to it, has <b>access to your funds</b> on this wallet.\n\n
+        \u25CF If the <b>seed is lost</b>, there is <b>no way to restore</b> this wallet.\n\n
+        \u25CF Do <b>not make any digital copy</b> of it!\n\n
+        \u25CF <u>Your seed is your money!</u>\n\n
+        \u25CF <i>Be responsible!</i>
+    </string>
+    <string name="btn_continue">Continue</string>
     <string name="instructions_read">Yes, I fully understand my responsibility</string>
-    <string name="wallet_creation_text">Your Wallet is now being created! :D</string>
+    <string name="wallet_creation_header">Generating wallet ...</string>
+    <string name="wallet_creation_header_fin">This is your seed:</string>
+    <string name="wallet_creation_header_error_file_exists">Old wallet data was found!</string>
+    <string name="wallet_creation_info">
+        Now write it carefully down and store it in a secure place.\n
+        Also consider the word order!\n\n
+        <b>Remember: Your seed is your money!</b>
+    </string>
+    <string name="wallet_creation_info_error_file_exists">If you want to make a new wallet, be sure to have a backup of your old wallet. So you don\'t loose access to your funds!\n\nThen go to settings to delete it or un- and then reinstall the App.</string>
     <string name="pin_creation_1">1</string>
     <string name="pin_creation_2">2</string>
     <string name="pin_creation_3">3</string>
@@ -31,4 +44,12 @@
     <string name="toast_pin_didnt_match">PINs didn\'t match</string>
     <string name="toast_pin_isnt_safe">You can be more creative!\nNo counting up or down nor equal numbers</string>
     <string name="fragment_success">Success!</string>
+    <string name="mnemonic_confirmation_header">Confirm your seed:</string>
+    <string name="mnemonic_confirmation_info">Please fill in the required words from your seed, to confirm &amp; finish your wallet setup</string>
+    <string name="mnemonic_confirmation_success">Congratulations!\n\nYour wallet is now ready!</string>
+    <string name="btn_finish">Finish</string>
+    <string name="mnemonic_confirmation_error_nomatch">Not all words matched with your seed!</string>
+    <string name="home_send">Send Eth</string>
+    <string name="home_receive">Receive Eth</string>
+    <string name="home_other">Other options</string>
 </resources>

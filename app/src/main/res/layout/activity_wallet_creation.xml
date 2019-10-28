@@ -1,19 +1,139 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".WalletCreationActivity">
+    android:layout_height="match_parent">
 
     <TextView
-        android:id="@+id/txtCreateWallet"
-        android:layout_width="wrap_content"
+        style="@style/text_header"
+        android:id="@+id/tv_wallet_creation_header"
+        android:layout_marginTop="10dp"
+        android:text="@string/wallet_creation_header"
+        />
+
+    <ScrollView
+        android:id="@+id/instructions_scrollview"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/wallet_creation_text"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.8" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        android:fadeScrollbars="false"
+        android:layout_above="@+id/wallet_creation_controls"
+        android:layout_below="@id/tv_wallet_creation_header"
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <FrameLayout
+                android:id="@+id/frame_wallet_creation_mnemonic"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                >
+                <GridLayout
+                    android:id="@+id/gl_wallet_creation_mnemonic"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:paddingLeft="10dp"
+                    android:background="@color/colorGreyTint"
+                    android:columnCount="3"
+                    android:rowCount="4"
+                    >
+                    <TextView
+                        style="@style/tv_mnemonic"
+                        android:id="@+id/tv_wallet_creation_mnemonic_1"
+                        android:textAlignment="viewStart"
+                        />
+
+                    <TextView
+                        style="@style/tv_mnemonic"
+                        android:id="@+id/tv_wallet_creation_mnemonic_2"
+                        />
+
+                    <TextView
+                        style="@style/tv_mnemonic"
+                        android:id="@+id/tv_wallet_creation_mnemonic_3"
+                        />
+
+                    <TextView
+                        style="@style/tv_mnemonic"
+                        android:id="@+id/tv_wallet_creation_mnemonic_4"
+                        />
+
+                    <TextView
+                        style="@style/tv_mnemonic"
+                        android:id="@+id/tv_wallet_creation_mnemonic_5"
+                        />
+
+                    <TextView
+                        style="@style/tv_mnemonic"
+                        android:id="@+id/tv_wallet_creation_mnemonic_6"
+                        />
+
+                    <TextView
+                        style="@style/tv_mnemonic"
+                        android:id="@+id/tv_wallet_creation_mnemonic_7"
+                        />
+
+                    <TextView
+                        style="@style/tv_mnemonic"
+                        android:id="@+id/tv_wallet_creation_mnemonic_8"
+                        />
+
+                    <TextView
+                        style="@style/tv_mnemonic"
+                        android:id="@+id/tv_wallet_creation_mnemonic_9"
+                        />
+
+                    <TextView
+                        style="@style/tv_mnemonic"
+                        android:id="@+id/tv_wallet_creation_mnemonic_10"
+                        />
+
+                    <TextView
+                        style="@style/tv_mnemonic"
+                        android:id="@+id/tv_wallet_creation_mnemonic_11"
+                        />
+
+                    <TextView
+                        style="@style/tv_mnemonic"
+                        android:id="@+id/tv_wallet_creation_mnemonic_12"
+                        />
+                </GridLayout>
+
+                <ProgressBar
+                    style="@style/Widget.AppCompat.ProgressBar"
+                    android:id="@+id/pb_wallet_creation"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:visibility="invisible"
+                    android:scaleX="2"
+                    android:scaleY="2"
+                    />
+            </FrameLayout>
+            <TextView
+                style="@style/text_info"
+                android:id="@+id/tv_wallet_creation_info"
+                android:text="@string/wallet_creation_info"
+                android:layout_marginTop="10dp"
+                />
+        </LinearLayout>
+    </ScrollView>
+
+    <LinearLayout
+        android:id="@+id/wallet_creation_controls"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_alignParentBottom="true"
+        android:paddingTop="20dp">
+        <Button
+            style="@style/btn_default_disabled"
+            android:id="@+id/btn_wallet_creation_continue"
+            android:text="@string/btn_continue"
+            android:onClick="nextActivity"
+            />
+    </LinearLayout>
+</RelativeLayout>

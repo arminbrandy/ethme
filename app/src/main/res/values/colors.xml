@@ -3,10 +3,9 @@
     <color name="colorPrimary">#00e5ff</color>
     <color name="colorPrimaryDark">#00b2cc</color>
     <color name="colorPrimaryLight">#6effff</color>
-    <!--<color name="colorSecondary">#ff1744</color>ff1900
-    <color name="colorSecondaryDark">#c4001d</color>
-    <color name="colorSecondaryLight">#ff616f</color>-->
     <color name="colorAccent">#FF0066</color>
+    <color name="colorAccentTint">#ffeffa</color>
+    <color name="colorGreyTint">#eee</color>
     <color name="titletextcolor">#000</color>
     <color name="textPrimary">#000</color>
     <color name="textDarkGrey">#444</color>

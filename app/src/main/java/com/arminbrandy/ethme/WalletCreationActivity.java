@@ -2,34 +2,30 @@ package com.arminbrandy.ethme;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.SharedPreferences;
+import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
-import android.security.keystore.KeyGenParameterSpec;
-import android.security.keystore.KeyProperties;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.GridLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.security.InvalidAlgorithmParameterException;
-import java.security.InvalidKeyException;
-import java.security.KeyPair;
-import java.security.KeyPairGenerator;
-import java.security.KeyStore;
-import java.security.KeyStoreException;
-import java.security.NoSuchAlgorithmException;
-import java.security.NoSuchProviderException;
-import java.security.Signature;
-import java.security.SignatureException;
-import java.security.UnrecoverableEntryException;
-import java.security.cert.CertificateException;
-import java.util.Base64;
-import java.util.Enumeration;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
 
 public class WalletCreationActivity extends AppCompatActivity {
     private static final String LOG_TAG = WalletCreationActivity.class.getCanonicalName();
-    private byte[] signature_pw;
-    private TextView viewCreateWalletTxt;
+    private TextView tvCreationHeader;
+    private TextView tvCreationInfo;
+    private List<TextView> tvsMnemonic = new ArrayList<>();
+    private ProgressBar pbCreation;
+    private GridLayout glMnemonic;
+    private Button btnContinue;
+    private Wallet mWallet;
+    private String mMnemonic;
 
     //private KeyguardManager mKeyguardManager;
     //private static final int REQUEST_CODE_CONFIRM_DEVICE_CREDENTIALS = 1;
@@ -38,90 +34,17 @@ public class WalletCreationActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_wallet_creation);
-        SharedPreferences sharedPreferences = getPreferences(MODE_PRIVATE);
+        //SharedPreferences sharedPreferences = getPreferences(MODE_PRIVATE);
 
-        viewCreateWalletTxt = findViewById(R.id.txtCreateWallet);
+        tvCreationHeader = findViewById(R.id.tv_wallet_creation_header);
+        tvCreationInfo = findViewById(R.id.tv_wallet_creation_info);
+        pbCreation = findViewById(R.id.pb_wallet_creation);
+        glMnemonic = findViewById(R.id.gl_wallet_creation_mnemonic);
+        btnContinue = findViewById(R.id.btn_wallet_creation_continue);
+        asignTvsMnemonic();
+
         String pin = getIntent().getStringExtra("pin");
-
-        // TODO move signing task seperate
-        try{
-            String walletPINKeyAlias = "keys_wallet_pw";
-            byte[] data = pin.getBytes(StandardCharsets.UTF_8);
-
-
-            /*
-             * Load the Android KeyStore instance using the
-             * "AndroidKeyStore" provider to list out what entries are
-             * currently stored.
-             */
-            KeyStore ks = KeyStore.getInstance("AndroidKeyStore");
-            ks.load(null);
-            boolean isAli = ks.containsAlias(walletPINKeyAlias);
-            Enumeration<String> aliases = ks.aliases();
-
-            /*
-             * Use a PrivateKey in the KeyStore to create a signature over
-             * some data.
-             */
-
-            KeyStore.Entry entry = ks.getEntry(walletPINKeyAlias, null);
-            if (!(entry instanceof KeyStore.PrivateKeyEntry)) {
-                Log.w(LOG_TAG, "Not an instance of a PrivateKeyEntry");
-
-                /*
-                 * Generate a new EC key pair entry in the Android Keystore by
-                 * using the KeyPairGenerator API. The private key can only be
-                 * used for signing or verification and only with SHA-256 or
-                 * SHA-512 as the message digest.
-                 */
-                KeyPairGenerator kpg = KeyPairGenerator.getInstance(
-                        KeyProperties.KEY_ALGORITHM_RSA, "AndroidKeyStore");
-                kpg.initialize(new KeyGenParameterSpec.Builder
-                        (walletPINKeyAlias,
-                                KeyProperties.PURPOSE_SIGN | KeyProperties.PURPOSE_VERIFY)
-                        .setDigests(KeyProperties.DIGEST_SHA256, KeyProperties.DIGEST_SHA512)
-                        .setSignaturePaddings(KeyProperties.SIGNATURE_PADDING_RSA_PKCS1)
-                        .build());
-
-                KeyPair kp = kpg.generateKeyPair();
-            }
-
-            ks.load(null);
-            entry = ks.getEntry(walletPINKeyAlias, null);
-            if (!(entry instanceof KeyStore.PrivateKeyEntry)) {
-
-            }
-            //Signature s2 = Signature.getInstance("SHA256withECDSA");
-            Signature s = Signature.getInstance("SHA256withRSA");
-            s.initSign(((KeyStore.PrivateKeyEntry) entry).getPrivateKey());
-            s.update(data);
-            signature_pw = s.sign();
-            String signature_pw64 = new String(Base64.getEncoder().encode(signature_pw));
-
-            Wallet myNewWallet = new Wallet(this, signature_pw64);
-            viewCreateWalletTxt.setText(myNewWallet.getAddress());
-
-        } catch (NoSuchAlgorithmException | NoSuchProviderException e){
-            Log.w(LOG_TAG, "Error creating KeyPairGenerator", e);
-        } catch (InvalidAlgorithmParameterException e){
-            Log.w(LOG_TAG, "Error generating key", e);
-        } catch (KeyStoreException e){
-            Log.w(LOG_TAG, "KeyStoreException", e);
-        } catch (IOException | CertificateException e){
-            Log.w(LOG_TAG, "Error loading KeyStore aliases", e);
-        } catch (UnrecoverableEntryException e){
-            Log.w(LOG_TAG, "KeyStore entry is no more recoverable", e);
-        } catch (InvalidKeyException e){
-            Log.w(LOG_TAG, "Key doesn't support cryptography", e);
-        } catch (SignatureException e){
-            Log.w(LOG_TAG, "Signing data failed", e);
-        }
-
-        // TODO All wallet and crypto stuff
-
-        //this.finish();
-        //finishActivity(0);
-
+        newWallet(pin);
 
         /* NOTES
         get Real user auth
@@ -132,4 +55,124 @@ public class WalletCreationActivity extends AppCompatActivity {
         }*/
     }
 
+    protected void onDestroy(){
+        super.onDestroy();
+        btnContinue.setTag(null);
+    }
+
+    private void asignTvsMnemonic() {
+        for(int i = 1; i <= 12; i++){
+            tvsMnemonic.add(
+                    findViewById(this.getResources().
+                        getIdentifier(
+                                "tv_wallet_creation_mnemonic_".concat(Integer.toString(i)),
+                                "id",
+                                this.getPackageName()
+                        ))
+            );
+        }
+    }
+    private void insertMnemonic(String mnemonic){
+        mMnemonic = mnemonic;
+        try{
+            String[] mnemonic12 = mnemonic.split(" ");
+            if(mnemonic12.length != 12)
+                throw new Wallet.WalletInvalidStateException("Mnemonic seed is invalid");
+            for(int i = 0; i < 12; i++){
+                tvsMnemonic.get(i).setText("" + (i+1) + ". " + mnemonic12[i]);
+            }
+        } catch (Wallet.WalletInvalidStateException e){
+            Log.w(LOG_TAG, "No valid mnemonic found", e);
+        }
+    }
+
+    public void nextActivity(View v){
+        Intent next = new Intent(this, MnemonicConfirmationActivity.class);
+        next.putExtra("mnemonic", mMnemonic);
+        next.putExtra("walletData", mWallet.getWalletDataAsString());
+        startActivity(next);
+    }
+
+    private void countdownContinue(String uuid){
+        new AsyncTask<String, Integer, Integer>() {
+            int wait = 30;
+            int milliseconds = 1000;
+            String uuid;
+            protected Integer doInBackground(String... args) {
+                uuid = args[0];
+                for(int i = wait; i > 0; i--){
+                    publishProgress(i);
+                    try {
+                         Thread.sleep(milliseconds);
+                     } catch (InterruptedException ex){}
+                }
+                return wait;
+            }
+
+            protected void onProgressUpdate(Integer... progress) {
+                super.onProgressUpdate(progress);
+                if(btnContinue.getTag() != null && btnContinue.getTag().equals(uuid)){
+                    btnContinue.setText(getString(R.string.btn_continue) + " (" + progress[0] + ")");
+                } else {
+                    milliseconds = 0;
+                }
+            }
+
+            protected void onPreExecute() {
+                super.onPreExecute();
+                btnContinue.setEnabled(false);
+                btnContinue.setText(getString(R.string.btn_continue) + " (" + wait + ")");
+            }
+
+            protected void onPostExecute(Integer wait) {
+                super.onPostExecute(wait);
+                if(btnContinue.getTag() != null && btnContinue.getTag().equals(uuid)){
+                    btnContinue.setEnabled(true);
+                    btnContinue.setText(getString(R.string.btn_continue));
+                }
+            }
+        }.execute(uuid);
+    }
+
+    private void newWallet(String pin){
+        new AsyncTask<String, Void, String>() {
+            String uuid = UUID.randomUUID().toString();
+            @Override
+            protected String doInBackground(String... args) {
+                mWallet = new Wallet(args[0]);
+                return mWallet.create(args[1]);
+            }
+
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+                tvCreationHeader.setText("creating wallet...");
+                glMnemonic.setVisibility(View.INVISIBLE);
+                pbCreation.setVisibility(View.VISIBLE);
+                tvCreationHeader.setText(getString(R.string.wallet_creation_header));
+                btnContinue.setTag(uuid);
+            }
+
+            @Override
+            protected void onPostExecute(String mnemonic) {
+                super.onPostExecute(mnemonic);
+                if(mnemonic != null) {
+                    insertMnemonic(mnemonic);
+                    tvCreationHeader.setText(getString(R.string.wallet_creation_header_fin));
+                    glMnemonic.setVisibility(View.VISIBLE);
+                    pbCreation.setVisibility(View.INVISIBLE);
+
+                    if(btnContinue.getTag() != null && btnContinue.getTag().equals(uuid))
+                        countdownContinue(uuid);
+                } else {
+                    // TODO - check if wallet is considered as saved or before creation
+                    tvCreationHeader.setText(getString(R.string.wallet_creation_header_error_file_exists));
+                    tvCreationInfo.setText(getString(R.string.wallet_creation_info_error_file_exists));
+                    pbCreation.setVisibility(View.INVISIBLE);
+                    glMnemonic.setVisibility(View.GONE);
+                    btnContinue.setVisibility(View.INVISIBLE);
+                }
+            }
+        }.execute(MainActivity.walletPath, pin);
+    }
 }

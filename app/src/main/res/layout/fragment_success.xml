@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/success_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -9,13 +8,12 @@
     android:visibility="gone">
 
     <TextView
+        style="@style/text_header"
         android:id="@+id/view_success"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:textAlignment="center"
         android:textSize="42sp"
         android:textColor="@color/textDarkGrey"
-        android:gravity="center"
         android:text="@string/fragment_success"
         android:onClick="nextActivity"
         />
