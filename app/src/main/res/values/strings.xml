@@ -34,6 +34,31 @@
     <string name="pin_creation_8">8</string>
     <string name="pin_creation_9">9</string>
     <string name="pin_creation_0">0</string>
+    <string name="nr_0">0</string>
+    <string name="nr_1">1</string>
+    <string name="nr_2">2</string>
+    <string name="nr_3">3</string>
+    <string name="nr_4">4</string>
+    <string name="nr_5">5</string>
+    <string name="nr_6">6</string>
+    <string name="nr_7">7</string>
+    <string name="nr_8">8</string>
+    <string name="nr_9">9</string>
+    <string name="nr_10">10</string>
+    <string name="nr_11">11</string>
+    <string name="nr_12">12</string>
+    <string name="nr_13">13</string>
+    <string name="nr_14">14</string>
+    <string name="nr_15">15</string>
+    <string name="nr_16">16</string>
+    <string name="nr_17">17</string>
+    <string name="nr_18">18</string>
+    <string name="nr_19">19</string>
+    <string name="nr_20">20</string>
+    <string name="nr_21">21</string>
+    <string name="nr_22">22</string>
+    <string name="nr_23">23</string>
+    <string name="nr_24">24</string>
     <string name="pin_pad_empty_cicle" translatable="false">\u25CB</string>
     <string name="pin_pad_full_cicle" translatable="false">\u25CF</string>
     <string name="pin_creation_tv_pin" translatable="false">\u25CB\u25CB\u25CB\u25CB\u25CB</string>
@@ -47,9 +72,15 @@
     <string name="mnemonic_confirmation_header">Confirm your seed:</string>
     <string name="mnemonic_confirmation_info">Please fill in the required words from your seed, to confirm &amp; finish your wallet setup</string>
     <string name="mnemonic_confirmation_success">Congratulations!\n\nYour wallet is now ready!</string>
+    <string name="mnemonic_restore_success">Congratulations!\n\nYour wallet is now restored!</string>
     <string name="btn_finish">Finish</string>
     <string name="mnemonic_confirmation_error_nomatch">Not all words matched with your seed!</string>
+    <string name="mnemonic_restore_error_invalid_words">These words aren\'t a valid mnemonic phrase!</string>
     <string name="home_send">Send Eth</string>
     <string name="home_receive">Receive Eth</string>
     <string name="home_other">Other options</string>
+    <string name="mnemonic_restore_header">Fill in your seed:</string>
+    <string name="btn_more">more ...</string>
+    <string name="btn_less">... less</string>
+    <string name="mnemonic_restore_info">Please fill in all words of your seed you want to restore</string>
 </resources>

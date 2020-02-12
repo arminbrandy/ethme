@@ -241,6 +241,10 @@ public final class CipherUtils {
         );
     }
 
+    public static boolean validateMnemonic(String mnemonic){
+        return MnemonicUtils.validateMnemonic(mnemonic);
+    }
+
     private static String digestHash(String data, String mode){
         try {
             MessageDigest msdDigest = MessageDigest.getInstance(mode);

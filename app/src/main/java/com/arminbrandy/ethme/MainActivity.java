@@ -43,12 +43,12 @@ public class MainActivity extends AppCompatActivity {
 
             Wallet w = new Wallet(walletPath);
             try{
-                String x = "This is your wallet address:\n\n";
+                String yourWalletAddressString = "This is your wallet address:\n\n";
                 if(w.getAddress() != null){
-                    x += w.getAddress();
+                    yourWalletAddressString += w.getAddress();
                 }
 
-                homeHeader.setText(x);
+                homeHeader.setText(yourWalletAddressString);
 
             } catch (Wallet.WalletInvalidStateException e){
 
@@ -63,10 +63,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void restoreWallet(View view) {
-        /* TODO Implement Restore functionality
+        /* TODO Implement Restore functionality*/
         Intent next = new Intent(this, PinPadActivity.class);
         next.putExtra("wallet","restore");
-        startActivity(next);*/
+        startActivity(next);
     }
 
 }

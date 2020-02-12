@@ -44,6 +44,11 @@ public class InstructionsActivity extends AppCompatActivity {
                 });
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        scrollViewEndCheck();
+    }
     private void scrollViewEndCheck(){
         if (scrollView.getChildAt(0).getBottom()
                 <= (scrollView.getHeight() + scrollView.getScrollY()) + scrollView.getChildAt(0).getBottom() * 0.02) {
@@ -62,7 +67,17 @@ public class InstructionsActivity extends AppCompatActivity {
     }
 
     public void continueWallet(View view) {
-        Intent next = new Intent(this, WalletCreationActivity.class);
+        Intent next = new Intent();
+        String intent = getIntent().getStringExtra("wallet");
+
+        switch(intent) {
+            case "create":
+                next = new Intent(this, WalletCreationActivity.class);
+                break;
+            case "restore":
+                next = new Intent(this, MnemonicRestoreActivity.class);
+                break;
+        }
         next.putExtra("pin",
                 getIntent().getStringExtra("pin")
         );

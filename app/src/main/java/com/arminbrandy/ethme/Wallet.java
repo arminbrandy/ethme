@@ -10,6 +10,7 @@ import org.web3j.crypto.Bip32ECKeyPair;
 import org.web3j.crypto.Bip44WalletUtils;
 import org.web3j.crypto.Credentials;
 import org.web3j.crypto.ECDSASignature;
+import org.web3j.crypto.MnemonicUtils;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -33,12 +34,21 @@ public class Wallet {
     }
 
     public String create(String pin){
+        return generate(pin, null);
+    }
+
+    public void restore(String pin, String mnemonic){
+        generate(pin, mnemonic);
+    }
+
+    private String generate(String pin, String mnemonic){
         if(mWalletFile.exists()) {
             Log.d(LOG_TAG, "Cannot overwrite existing wallet file");
             return null;
         }
 
-        String mnemonic = CipherUtils.generateMnemonic();
+        if(mnemonic == null)
+            mnemonic = CipherUtils.generateMnemonic();
 
         // addresses List to add HD addresses anytime later on
         mAddressIndex = 0;
@@ -81,7 +91,7 @@ public class Wallet {
         return persistWallet();
     }
 
-    private boolean persistWallet(){
+    public boolean persistWallet(){
         try{
             // encrypt total WalletData, inclusive addresses for higher privacy / security reasons
             // using an AndroidKeyStore symmetric key this time

@@ -63,12 +63,12 @@ public class WalletCreationActivity extends AppCompatActivity {
     private void asignTvsMnemonic() {
         for(int i = 1; i <= 12; i++){
             tvsMnemonic.add(
-                    findViewById(this.getResources().
-                        getIdentifier(
-                                "tv_wallet_creation_mnemonic_".concat(Integer.toString(i)),
-                                "id",
-                                this.getPackageName()
-                        ))
+                findViewById(this.getResources().
+                    getIdentifier(
+                        "tv_wallet_creation_mnemonic_".concat(Integer.toString(i)),
+                        "id",
+                        this.getPackageName()
+                    ))
             );
         }
     }

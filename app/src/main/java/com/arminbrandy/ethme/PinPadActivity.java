@@ -26,6 +26,7 @@ public class PinPadActivity extends AppCompatActivity {
 
     private List<Integer> PIN = new ArrayList<>();
     private List<Integer> PINc = new ArrayList<>();
+    private String intent;
 
     private TextView viewPIN;
     private TextView viewPINConfirmation;
@@ -50,6 +51,8 @@ public class PinPadActivity extends AppCompatActivity {
         String item = getIntent().getStringExtra("wallet");
         args.putString(Intent.EXTRA_TEXT, item);
         pinPad.setArguments(args);*/
+
+        intent = getIntent().getStringExtra("wallet");
 
         getSupportFragmentManager().beginTransaction().
                 replace(R.id.pin_pad_container, pinPad).commit();
@@ -211,6 +214,7 @@ public class PinPadActivity extends AppCompatActivity {
         String pinS = PIN.stream().map(i -> i.toString()).collect(Collectors.joining());
         Intent next = new Intent(this, InstructionsActivity.class);
         next.putExtra("pin",pinS);
+        next.putExtra("wallet",intent);
         startActivity(next);
         resetPIN(false);
     }
